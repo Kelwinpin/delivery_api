@@ -7,7 +7,7 @@
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
-const configs = require("./../constants/db/index.js");
+const configs = require("../constants/db/index.js");
 const versao = process.env.MODEL_VERSION || 1;
 const tableHints = Sequelize.TableHints;
 const coreMemory = require("./coreMemory.js");
