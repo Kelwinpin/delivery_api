@@ -22,6 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       Companies.hasMany(models.order_itens, { foreignKey: "company_id", as: "order_items" });
     };
   
-    return Company;
+    return Companies;
   };
   

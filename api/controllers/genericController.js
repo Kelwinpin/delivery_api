@@ -21,6 +21,7 @@ function parseNumericArrayParam(param) {
 
 exports.list = async (req, _, callback) => {
   const entity = req.entity;
+  console.log("🚀 ~ exports.list= ~ entity:", entity)
   try {
     const token = functions.getToken(req);
     const decoded = jwt.decode(token);

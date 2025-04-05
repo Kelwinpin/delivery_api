@@ -19,6 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       OrderItens.belongsTo(models.companies, { foreignKey: "company_id", as: "company" });
     };
   
-    return OrderItem;
+    return OrderItens;
   };
   

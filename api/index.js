@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const coreBase = require('../base/functions/coreBase');
+const coreBase = require('../base/utils/coreBase.js');
 const promiseRetry = require('promise-retry');
 
 const app = express();

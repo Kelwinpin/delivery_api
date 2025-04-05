@@ -4,6 +4,7 @@ const genericController = require('../controllers/genericController');
 const { validateBody } = require('../../base/utils/functions.js');
 
 const createGenericRoutes = (entity) => {
+  console.log("🚀 ~ createGenericRoutes ~ entity:", entity)
   const router = express.Router();
 
   if (entity) {
