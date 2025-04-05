@@ -67,7 +67,7 @@ app.listen(port, async (err) => {
     },
   ).then(
     () => {
-      console.log('Connected to database. ' + process.env.NODE_ENV);
+      console.log('Connected to database!');
     },
     (err) => {
       console.log(`Error: ${err}`);

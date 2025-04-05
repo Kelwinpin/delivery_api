@@ -25,18 +25,11 @@ Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
  * connectionBase: Realiza e Retorna a conexão na base do cliente
  * @return {Promise}
  */
-const connectionBase = async (typeDB = "NEW") => {
+const connectionBase = async () => {
   try {
     // Realiza conexão de acodo com os dados do cliente
-    const env = process.env.NODE_ENV || "dev";
 
-    const config = configs[env];
-
-    config.host = process.env[`DB_HOST`];
-    config.database = process.env[`DB_DATABASE`];
-    config.username = process.env[`DB_USER`];
-    config.password = process.env[`DB_PASS`];
-    config.port = Number(process.env[`DB_PORT`]);
+    const config = configs;
     
     const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
@@ -46,12 +39,9 @@ const connectionBase = async (typeDB = "NEW") => {
     db.sequelize = sequelize;
 
     // Importa todos os metadados dos models
-    importAllModels(db, typeDB);
+    importAllModels(db);
 
     await db.sequelize.authenticate();
-    if (typeDB != "OLD") {
-      coreMemory.setConnection(db);
-    }
     return db;
   } catch (e) {
     console.log(e);
@@ -69,8 +59,8 @@ const getDB = async () => {
  * importAllModels: Percorre a pasta da versão atual (enviroment variable) dos models e carrega os metadados no db.
  * @param {Object} db Metadados do sequelize
  */
-const importAllModels = (db, typeDB) => {
-  const modelsPath = `${__dirname}/../database/${typeDB}/models/`;
+const importAllModels = (db) => {
+  const modelsPath = `${__dirname}/../database/models/`;
 
   // Percorre o diretório de models
   fs.readdirSync(modelsPath)
@@ -239,12 +229,9 @@ const makeCountGroup = async (model, params = {}) => {
  * @param {Object} values Valores a serem inseridos
  * @param {Object} params Parâmetros utilizados na query no model
  */
-const insert = async (model, values, params = {}, typeDB = "NEW") => {
-  if (typeDB != "OLD" && typeDB != "NEW") {
-    typeDB = "NEW";
-  }
+const insert = async (model, values, params = {}) => {
 
-  const db = await getDB(typeDB);
+  const db = await getDB();
   const hasTransaction = params?.transaction ? true : false;
   const transaction = params?.transaction ? params.transaction : await db.sequelize.transaction();
   if (!hasTransaction) params.transaction = transaction;
@@ -307,7 +294,6 @@ const upsert = async (model, newValues, params) => {
       if (!hasTransaction) await transaction.commit();
       return updatedRecords;
     } else {
-      console.log(316, model, newValues);
       const created = await db[model].create(newValues, { transaction });
       if (!hasTransaction) await transaction.commit();
       return [created];
@@ -325,13 +311,9 @@ const upsert = async (model, newValues, params) => {
  * @param {Object} values Valores a serem atualizados
  * @param {Object} params Parâmetros utilizados na query no model
  */
-const update = async (model, id, values, params = {}, typeDB = "NEW") => {
+const update = async (model, id, values, params = {}) => {
 
-
-  if (typeDB != "OLD" && typeDB != "NEW") {
-    typeDB = "NEW";
-  }
-  const db = await getDB(typeDB);
+  const db = await getDB();
 
   const hasTransaction = params?.transaction ? true : false;
   const transaction = params?.transaction ? params.transaction : await db.sequelize.transaction();
