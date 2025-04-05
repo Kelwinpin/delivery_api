@@ -1,7 +1,7 @@
 const express = require('express');
 const controllers = require('../controllers');
 const genericController = require('../controllers/genericController');
-const { validateBody } = require('../../commons/utils/functions');
+const { validateBody } = require('../../base/utils/functions.js');
 
 const createGenericRoutes = (entity) => {
   const router = express.Router();

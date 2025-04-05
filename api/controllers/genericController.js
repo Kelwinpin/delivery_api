@@ -1,9 +1,9 @@
 'use strict';
 
-const functions = require('../../base/utils/functions');
+const functions = require('../../base/utils/functions.js');
 const {
   STATUS_CODE,
-} = require('../../base/constants/general/http-status-codes');
+} = require('../../base/constants/general/http-status-codes.js');
 const jwt = require('jsonwebtoken');
 
 function parseArrayParam(param) {

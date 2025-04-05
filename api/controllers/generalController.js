@@ -1,10 +1,10 @@
 'use strict';
 
-const coreBase = require('../../commons/utils/coreBase');
-const functions = require('../../commons/utils/functions');
+const coreBase = require('../../base/utils/coreBase.js');
+const functions = require('../../base/utils/functions.js');
 const {
   STATUS_CODE,
-} = require('../../commons/constants/general/http-status-codes');
+} = require('../../base/constants/general/http-status-codes.js');
 
 const cep = require('cep-promise');
 

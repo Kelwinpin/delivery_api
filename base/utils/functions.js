@@ -441,7 +441,6 @@ exports.comparePasswords = async (password, hashPassword) => {
 // Middleware de validação
 exports.validateBody = (schema) => (req, res, next) => {
   try {
-    console.log(req.body);
     schema.parse(req.body);
     next();
   } catch (e) {
