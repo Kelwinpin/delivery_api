@@ -32,19 +32,15 @@ const connectionBase = async (typeDB = "NEW") => {
 
     const config = configs[env];
 
-    if (env == "prod" || typeDB == "OLD") {
-      config.host = process.env[`${typeDB}_DB_HOST`];
-      config.database = process.env[`${typeDB}_DB_DATABASE`];
-      config.username = process.env[`${typeDB}_DB_USER`];
-      config.password = process.env[`${typeDB}_DB_PASS`];
-      config.port = Number(process.env[`${typeDB}_DB_PORT`]);
-    }
-
-    config.logging = process.env.LOGS_DB === "true";
-
+    config.host = process.env[`DB_HOST`];
+    config.database = process.env[`DB_DATABASE`];
+    config.username = process.env[`DB_USER`];
+    config.password = process.env[`DB_PASS`];
+    config.port = Number(process.env[`DB_PORT`]);
+    
     const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-    console.log("AMBIENTE=>", config.host, config.database, process.env.NODE_ENV);
+    console.log("AMBIENTE=>", config.host, config.database);
     const db = {};
     db.Sequelize = Sequelize;
     db.sequelize = sequelize;
@@ -64,11 +60,8 @@ const connectionBase = async (typeDB = "NEW") => {
   }
 };
 
-const getDB = async (typeDB = "NEW") => {
+const getDB = async () => {
   let db = coreMemory.getConnection();
-  if (db == null || typeDB == "OLD") {
-    db = await connectionBase(typeDB);
-  }
   return db;
 };
 
