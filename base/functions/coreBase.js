@@ -11,6 +11,9 @@ const configs = require("./../constants/db/index.js");
 const versao = process.env.MODEL_VERSION || 1;
 const tableHints = Sequelize.TableHints;
 const coreMemory = require("./coreMemory.js");
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // https://stackoverflow.com/a/49678951
 Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
@@ -31,9 +34,29 @@ const connectionBase = async () => {
 
     const config = configs;
     
-    const sequelize = new Sequelize(config.database, config.username, config.password, config);
+    const sequelize =  new Sequelize(process.env.DB || "", process.env.DB_USER || "", process.env.DB_PASSWORD || "", {
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT) || 5432,
+      dialect: "postgres",
+      logging: Boolean(process.env.DB_LOGGING) || false,
+      protocol: "postgres",
+      pool: {
+          max: 5,
+          min: 0,
+          acquire: 30000,
+          idle: 10000,
+      },
+      dialectOptions: {
+          ssl: {
+              require: true,
+              rejectUnauthorized: false,
+          },
+          timezone: "Z",
+      },
+  });
+    console.log("🚀 ~ connectionBase ~ process.env.DB_PASSWORD:", process.env.DB_PASSWORD)
 
-    console.log("AMBIENTE=>", config.host, config.database);
+    console.log("AMBIENTE=>", process.env.DB_HOST, process.env.DB);
     const db = {};
     db.Sequelize = Sequelize;
     db.sequelize = sequelize;
