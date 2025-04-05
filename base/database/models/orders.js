@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Order = sequelize.define("order", {
+    const Orders = sequelize.define("orders", {
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       user_id: DataTypes.INTEGER,
       created_at: DataTypes.DATE,
@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
     });
   
-    Order.associate = function(models) {
-      Order.belongsTo(models.user, { foreignKey: "user_id", as: "user" });
-      Order.hasMany(models.order_item, { foreignKey: "order_id", as: "items" });
+    Orders.associate = function(models) {
+      Orders.belongsTo(models.users, { foreignKey: "user_id", as: "user" });
+      Orders.hasMany(models.order_itens, { foreignKey: "order_id", as: "items" });
     };
   
     return Order;

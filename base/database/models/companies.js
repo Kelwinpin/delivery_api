@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Company = sequelize.define("company", {
+    const Companies = sequelize.define("companies", {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -11,15 +11,15 @@ module.exports = (sequelize, DataTypes) => {
       active: DataTypes.BOOLEAN,
       created_at: DataTypes.STRING,
     }, {
-      tableName: "company",
+      tableName: "companies",
       timestamps: false,
       underscored: true,
     });
   
-    Company.associate = function(models) {
-      Company.hasMany(models.user, { foreignKey: "company_id", as: "users" });
-      Company.hasMany(models.products, { foreignKey: "company_id", as: "products" });
-      Company.hasMany(models.order_item, { foreignKey: "company_id", as: "order_items" });
+    Companies.associate = function(models) {
+      Companies.hasMany(models.users, { foreignKey: "company_id", as: "users" });
+      Companies.hasMany(models.products, { foreignKey: "company_id", as: "products" });
+      Companies.hasMany(models.order_itens, { foreignKey: "company_id", as: "order_items" });
     };
   
     return Company;
