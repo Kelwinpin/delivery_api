@@ -29,7 +29,7 @@ Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
 const connectionBase = async () => {
   try {
     // Realiza conexão de acodo com os dados do cliente    
-    const sequelize =  new Sequelize(process.env.DB || "", process.env.DB_USER || "", process.env.DB_PASSWORD || "", {
+    const sequelize =  new Sequelize(process.env.DB || "", process.env.DB_USERNAME || "", process.env.DB_PASSWORD || "", {
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT) || 5432,
       dialect: "postgres",
