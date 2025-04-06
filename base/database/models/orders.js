@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       delivery_at: DataTypes.DATE,
     }, {
-      tableName: "order",
+      tableName: "orders",
       timestamps: false,
       underscored: true,
     });

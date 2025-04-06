@@ -83,7 +83,6 @@ const importAllModels = (db) => {
     .filter((file) => file.indexOf(".") !== 0 && file.slice(-3) === ".js")
     .forEach((file) => {
       const model = db.sequelize.import(path.join(modelsPath, file));
-      console.log("🚀 ~ .forEach ~ model:", model.name)
       db[model.name] = model;
     });
 
@@ -169,6 +168,7 @@ const makeSelectByPK = async (model, id, params = {}) => {
 const makeSelectPaging = async (model, params = {}, offset = 0, limit = 10, order, orderBy) => {
   try {
     const db = await getDB();
+    console.log("🚀 ~ makeSelectPaging ~ model:", model)
 
     params.tableHint = tableHints.NOLOCK;
     params.offset = params?.offset ? params.offset : offset;
