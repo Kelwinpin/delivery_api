@@ -21,7 +21,7 @@ const get = async (dataToFind, detail) => {
     paramsQuery.include = [];
     if (dataToFind.arrayToShow) {
       const modelAssociations = await coreBase.getModelAssociations(
-        dataToFind.entidade.model,
+        dataToFind.entity.model,
       );
 
       const associations = await functions.returnAssociation(
@@ -67,13 +67,13 @@ const get = async (dataToFind, detail) => {
 
     const orderBy = dataToFind.orderBy
       ? dataToFind.orderBy
-      : dataToFind.entidade.primaryKey;
+      : dataToFind.entity.primaryKey;
     const orderAscDesc = dataToFind.orderAscDesc
       ? dataToFind.orderAscDesc
       : 'DESC';
 
     const list = await coreBase.makeSelectPaging(
-      dataToFind.entidade.model,
+      dataToFind.entity.model,
       paramsQuery,
       offset,
       limit,
@@ -84,7 +84,7 @@ const get = async (dataToFind, detail) => {
     // paramsQuery.group = 'tarefas.idTarefas';
     // paramsQuery.raw = true;
     // const countData = await coreBase.makeCountGroup(
-    //   dataToFind.entidade.model,
+    //   dataToFind.entity.model,
     //   paramsQuery,
     // );
 
@@ -93,7 +93,7 @@ const get = async (dataToFind, detail) => {
     if (detail)
       if (list.rows.length > 0) return list.rows[0];
       else
-        throw new Error(`${dataToFind.entidade.nomeEntidade} Não Encontrado`);
+        throw new Error(`${dataToFind.entity.nomeentity} Não Encontrado`);
 
     return list;
   } catch (error) {
@@ -118,10 +118,9 @@ const create = async (incomingData) => {
         throw new Error('Company não encontrado');
       }
     }
-
     // Insere o novo registro
     const newTask = await coreBase.insert(
-      incomingData.entidade.model,
+      incomingData.entity.model,
       incomingData,
       {},
       incomingData.decoded?.id,
@@ -140,7 +139,7 @@ const update = async (incomingData) => {
     incomingData.updatedAt = new Date();
 
     const updated = await coreBase.update(
-      incomingData.entidade.model,
+      incomingData.entity.model,
       [incomingData.id],
       incomingData,
       {},
@@ -153,7 +152,7 @@ const update = async (incomingData) => {
   }
 };
 
-const changeStatus = async (ids, type, decoded, entidade) => {
+const changeStatus = async (ids, type, decoded, entity) => {
   try {
     const dataToChange = {};
     dataToChange.deletedAt = null;
@@ -165,7 +164,7 @@ const changeStatus = async (ids, type, decoded, entidade) => {
     dataToChange.updatedAt = new Date();
 
     const updated = await coreBase.update(
-      entidade.model,
+      entity.model,
       ids,
       dataToChange,
       {},

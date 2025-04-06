@@ -7,7 +7,7 @@ const service = require('./companies.service');
 const validators = require('./companies.zod');
 
 const entity = {
-    entityName: 'companies',
+  entityName: 'company',
   entityNamePlural: 'companies',
   primaryKey: 'id',
   model: 'companies',

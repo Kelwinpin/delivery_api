@@ -7,8 +7,6 @@
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
-const configs = require("../constants/db/index.js");
-const versao = process.env.MODEL_VERSION || 1;
 const tableHints = Sequelize.TableHints;
 const coreMemory = require("./coreMemory.js");
 const dotenv = require('dotenv');
@@ -30,10 +28,7 @@ Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
  */
 const connectionBase = async () => {
   try {
-    // Realiza conexão de acodo com os dados do cliente
-
-    const config = configs;
-    
+    // Realiza conexão de acodo com os dados do cliente    
     const sequelize =  new Sequelize(process.env.DB || "", process.env.DB_USER || "", process.env.DB_PASSWORD || "", {
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT) || 5432,
@@ -54,9 +49,6 @@ const connectionBase = async () => {
           timezone: "Z",
       },
   });
-    console.log("🚀 ~ connectionBase ~ process.env.DB_PASSWORD:", process.env.DB_PASSWORD)
-
-    console.log("AMBIENTE=>", process.env.DB_HOST, process.env.DB);
     const db = {};
     db.Sequelize = Sequelize;
     db.sequelize = sequelize;
@@ -75,6 +67,7 @@ const connectionBase = async () => {
 
 const getDB = async () => {
   let db = coreMemory.getConnection();
+  db = await connectionBase();
   return db;
 };
 
@@ -90,6 +83,7 @@ const importAllModels = (db) => {
     .filter((file) => file.indexOf(".") !== 0 && file.slice(-3) === ".js")
     .forEach((file) => {
       const model = db.sequelize.import(path.join(modelsPath, file));
+      console.log("🚀 ~ .forEach ~ model:", model.name)
       db[model.name] = model;
     });
 
@@ -99,7 +93,6 @@ const importAllModels = (db) => {
       db[modelName].associate(db);
     }
   });
-  console.log("import all models", modelsPath);
 };
 
 /**
@@ -253,7 +246,6 @@ const makeCountGroup = async (model, params = {}) => {
  * @param {Object} params Parâmetros utilizados na query no model
  */
 const insert = async (model, values, params = {}) => {
-
   const db = await getDB();
   const hasTransaction = params?.transaction ? true : false;
   const transaction = params?.transaction ? params.transaction : await db.sequelize.transaction();
