@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       cnpj: DataTypes.STRING,
       logo: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
-      created_at: DataTypes.STRING,
+      created_at: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.fn('now'),
+      },
     }, {
       tableName: "companies",
       timestamps: false,
