@@ -5,7 +5,10 @@ module.exports = (sequelize, DataTypes) => {
       amount: DataTypes.INTEGER,
       price: DataTypes.DOUBLE,
       company_id: DataTypes.INTEGER,
-      active: DataTypes.BOOLEAN,
+      active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
     }, {
       tableName: "products",
       timestamps: false,
