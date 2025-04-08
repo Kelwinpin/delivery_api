@@ -5,15 +5,24 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'user_id',
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      field: 'created_at',
-      defaultValue: sequelize.fn('now'),
-    },
     deliveryAt: {
       type: DataTypes.DATE,
       field: 'delivery_at',
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: "created_at",
+      defaultValue: sequelize.fn('now'),
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: "updated_at",
+      onUpdate: "NOW()",
+    },
+    deletedAt: {
+      type: DataTypes.DATE,
+      field: "deleted_at"
+    }
   }, {
     tableName: "orders",
     timestamps: false,

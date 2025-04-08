@@ -10,6 +10,20 @@ module.exports = (sequelize, DataTypes) => {
       field: 'company_id',
     },
     password: DataTypes.STRING,
+    createdAt: {
+      type: DataTypes.DATE,
+      field: "created_at",
+      defaultValue: sequelize.fn('now'),
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: "updated_at",
+      onUpdate: "NOW()",
+    },
+    deletedAt: {
+      type: DataTypes.DATE,
+      field: "deleted_at"
+    }
   }, {
     tableName: "users",
     timestamps: false,

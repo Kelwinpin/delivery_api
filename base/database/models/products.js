@@ -8,10 +8,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       field: 'company_id',
     },
-    active: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
+    createdAt: {
+      type: DataTypes.DATE,
+      field: "created_at",
+      defaultValue: sequelize.fn('now'),
     },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: "updated_at",
+      onUpdate: "NOW()",
+    },
+    deletedAt: {
+      type: DataTypes.DATE,
+      field: "deleted_at"
+    }
   }, {
     tableName: "products",
     timestamps: false,

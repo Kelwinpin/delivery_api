@@ -8,12 +8,25 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     cnpj: DataTypes.STRING,
     logo: DataTypes.STRING,
-    active: DataTypes.BOOLEAN,
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at',
       defaultValue: sequelize.fn('now'),
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: "created_at",
+      defaultValue: sequelize.fn('now'),
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: "updated_at",
+      onUpdate: "NOW()",
+    },
+    deletedAt: {
+      type: DataTypes.DATE,
+      field: "deleted_at"
+    }
   }, {
     tableName: "companies",
     timestamps: false,
