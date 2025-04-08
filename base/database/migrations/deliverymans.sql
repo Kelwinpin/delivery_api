@@ -17,3 +17,12 @@ ADD CONSTRAINT fk_orders_deliveryman
 FOREIGN KEY (deliveryman_id)
 REFERENCES deliverymans(id)
 ON DELETE SET NULL;
+
+ALTER TABLE deliverymans
+ADD COLUMN company_id INTEGER;
+
+ALTER TABLE deliverymans
+ADD CONSTRAINT fk_deliveryman_company
+FOREIGN KEY (company_id)
+REFERENCES companies(id)
+ON DELETE CASCADE;
