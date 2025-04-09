@@ -29,7 +29,7 @@ const doLogin = async (dataToFind) => {
             'users',
             {
                 where: {
-                    cpf: dataToFind.cpf,
+                    cpf: dataToFind.login,
                     password: passwordHash,
                     companyId: company[0].id,
                 },
