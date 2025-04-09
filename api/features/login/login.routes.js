@@ -2,7 +2,7 @@
 
 const express = require('express');
 const { validateBody } = require('../../../base/utils/functions.js');
-const controllers = require('../controllers');
+const controllers = require('../../controllers');
 
 const controller = require('./login.controller');
 const { login } = require('./login.zod');
