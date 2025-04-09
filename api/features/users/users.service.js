@@ -110,7 +110,6 @@ const create = async (incomingData) => {
       }
     }
     incomingData.password = await functions.generateEncryptedPassword(incomingData.password);
-    console.log("🚀 ~ create ~ incomingData:", incomingData)
 
     // Insere o novo registro
     const newTask = await coreBase.insert(

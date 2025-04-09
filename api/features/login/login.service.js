@@ -1,8 +1,8 @@
 'use strict';
 
-const crypto = require('crypto');
 const tokenService = require('../../../base/auth/token');
 const coreBase = require('../../../base/utils/coreBase');
+const functions = require('../../../base/utils/functions');
 const { CustomError, invalidLogin } = require('../../../base/customErrors');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -10,10 +10,7 @@ dotenv.config();
 
 const doLogin = async (dataToFind) => {
     try {
-        const passwordHash = crypto
-            .createHash('sha1')
-            .update(dataToFind.password)
-            .digest('hex');
+        const passwordHash = await functions.generateEncryptedPassword(dataToFind.password)
 
         const company = await coreBase.makeSelect(
             'companies',
@@ -31,14 +28,15 @@ const doLogin = async (dataToFind) => {
                 where: {
                     cpf: dataToFind.login,
                     password: passwordHash,
-                    companyId: company[0].id,
+                    companyId: company[0].dataValues.id,
                 },
             },
         );
 
         if (!user) throw new CustomError(invalidLogin);
         const payload = { ...user.dataValues };
-        const token = tokenService.createToken(payload, process.env.DELIVERY_SECRET_KEY);
+        console.log("🚀 ~ doLogin ~ payload:", payload)
+        const token = tokenService.createToken(payload, "delivery");
 
         return token;
     } catch (error) {
