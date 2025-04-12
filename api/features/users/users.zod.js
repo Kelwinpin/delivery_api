@@ -5,4 +5,5 @@ exports.insert = z.object({
   cpf: z.string().min(11).max(11),
   address: z.string().min(3).max(100),
   password: z.string(),
+  email: z.string().email(),
 });
