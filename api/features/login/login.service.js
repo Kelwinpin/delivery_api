@@ -5,7 +5,7 @@ const coreBase = require('../../../base/utils/coreBase');
 const functions = require('../../../base/utils/functions');
 const { CustomError, invalidLogin } = require('../../../base/customErrors');
 const dotenv = require('dotenv');
-const { raw } = require('body-parser');
+const { sendEmail } = require('../../../base/utils/emailSender');
 dotenv.config();
 
 
@@ -38,7 +38,6 @@ const doLogin = async (dataToFind) => {
         
         if (!user) throw new CustomError(invalidLogin);
         if (!authenticate) throw new CustomError(invalidLogin);
-
         user[0].dataValues.company = user[0].company.dataValues;
 
         const payload = { ...user[0].dataValues };
