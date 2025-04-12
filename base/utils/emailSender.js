@@ -16,13 +16,13 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-async function sendEmail(to, subject, text) {
+async function sendEmail(to, subject, text, html) {
   const mailOptions = {
-    from: '"Sistema de Entrega" <kelwinrichard@gmail.com>',
+    from: '"Sistema de Entrega" <sistemadeenvioautomatico2@gmail.com>',
     to,
     subject,
     text,
-    html: '<b>Hello world?</b>',
+    html,
   };
 
   // Send the email
