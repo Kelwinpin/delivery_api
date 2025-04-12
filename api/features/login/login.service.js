@@ -10,8 +10,6 @@ dotenv.config();
 
 const doLogin = async (dataToFind) => {
     try {
-        const passwordHash = await functions.generateEncryptedPassword(dataToFind.password)
-
         const company = await coreBase.makeSelect(
             'companies',
             {
@@ -21,21 +19,24 @@ const doLogin = async (dataToFind) => {
                 attributes: ['id'],
             }
         )
-
+        
         const user = await coreBase.makeSelect(
             'users',
             {
                 where: {
                     cpf: dataToFind.login,
-                    password: passwordHash,
                     companyId: company[0].dataValues.id,
                 },
             },
         );
 
+        const authenticate = await functions.comparePasswords(dataToFind.password, user[0].dataValues.password);
+        
         if (!user) throw new CustomError(invalidLogin);
-        const payload = { ...user.dataValues };
-        console.log("🚀 ~ doLogin ~ payload:", payload)
+        if (!authenticate) throw new CustomError(invalidLogin);
+
+        const payload = { ...user[0].dataValues };
+        delete payload.password;
         const token = tokenService.createToken(payload, "delivery");
 
         return token;
