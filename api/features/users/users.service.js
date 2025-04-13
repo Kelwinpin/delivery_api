@@ -2,7 +2,9 @@
 'use strict';
 
 const coreBase = require('../../../base/utils/coreBase');
+const { sendEmail } = require('../../../base/utils/emailSender');
 const functions = require('../../../base/utils/functions');
+const { welcome } = require('../../../base/constants/hmtl/welcome');
 
 const get = async (dataToFind, detail) => {
   try {
@@ -110,6 +112,7 @@ const create = async (incomingData) => {
       }
     }
     incomingData.password = await functions.generateEncryptedPassword(incomingData.password);
+    sendEmail(incomingData.email, 'Cadastro no sistema de entrega', 'Bem vindo!', welcome);
 
     // Insere o novo registro
     const newTask = await coreBase.insert(
@@ -119,7 +122,7 @@ const create = async (incomingData) => {
       incomingData.decoded?.id,
     );
 
-    return newTask;
+    return incomingData;
   } catch (error) {
     throw error;
   }

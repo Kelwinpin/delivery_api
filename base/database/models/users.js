@@ -5,6 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     cpf: DataTypes.STRING,
     address: DataTypes.STRING,
     image: DataTypes.STRING,
+    email: DataTypes.STRING,
+    phone: DataTypes.STRING,
     companyId: {
       type: DataTypes.INTEGER,
       field: 'company_id',
