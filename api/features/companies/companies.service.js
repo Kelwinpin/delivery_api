@@ -104,26 +104,24 @@ const get = async (dataToFind, detail) => {
 
 const create = async (incomingData) => {
   try {
-    if (incomingData.companyId) {
-      
-      const paramsQueryCompany = {
-        where: { id: incomingData.companyId },
-      };
-
-      const hasCompany = await coreBase.makeSelect(
-        'companies',
-        paramsQueryCompany,
-      );
-      if (!hasCompany || hasCompany.length === 0) {
-        throw new Error('Company não encontrado');
-      }
-    }
     // Insere o novo registro
     const newTask = await coreBase.insert(
       incomingData.entity.model,
       incomingData,
       {},
       incomingData.decoded?.id,
+    );
+
+    const hashPassword = await functions.generateEncryptedPassword(`${newTask.name.toLowerCase()}@${newTask.id}`)
+
+    await coreBase.insert(
+      "dashboard",
+      {
+        login: newTask.name,
+        company_id: newTask.id,
+        password: hashPassword
+      },
+      {}
     );
 
     return newTask;
