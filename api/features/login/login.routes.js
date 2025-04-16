@@ -13,4 +13,8 @@ router.post('/', validateBody(loginSchema), async (req, res) => {
     controllers.execute(req, res, await controller.makeLogin);
 });
 
+router.post('/dashboard', validateBody(loginSchema), async (req, res) => {
+    controllers.execute(req, res, await controller.makeLogin);
+});
+
 module.exports = router;

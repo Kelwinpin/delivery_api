@@ -21,3 +21,20 @@ exports.makeLogin = async (req, _, callback) => {
         );
     }
 };
+
+exports.makeLoginDashboard = async (req, _, callback) => {
+    try {
+        const { body } = req;
+        const token = await loginService.doLoginDashboard(body);
+
+        functions.makeCallBack(callback, STATUS_CODE.OK, token);
+    } catch (error) {
+        const errorMessage = 'Falha ao Fazer Login';
+        functions.makeCallBack(
+            callback,
+            STATUS_CODE.BAD_REQUEST,
+            error,
+            errorMessage,
+        );
+    }
+};

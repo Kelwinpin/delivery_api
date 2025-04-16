@@ -6,9 +6,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      company_id: {
+      companyId: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        field: "company_id",
       },
       password: {
         type: DataTypes.STRING,
@@ -31,5 +32,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     { tableName: 'dashboard', timeStamps: false, underscored: true},
   );
+
+  Dashboard.associate = function (models) {
+    Dashboard.belongsTo(models.companies, {
+      foreignKey: 'companyId',
+    });
+  };
+
   return Dashboard;
 };
