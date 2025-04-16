@@ -83,7 +83,7 @@ const doLoginDashboard = async (dataToFind) => {
 
         const payload = { ...user[0].dataValues };
         delete payload.password;
-        const token = tokenService.createToken(payload, "delivery");
+        const token = tokenService.createToken(payload, "dashboard");
 
         return token;
     } catch (error) {
