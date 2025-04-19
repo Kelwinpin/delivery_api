@@ -50,6 +50,7 @@ const doLogin = async (dataToFind) => {
 };
 
 const doLoginDashboard = async (dataToFind) => {
+    console.log("🚀 ~ doLoginDashboard ~ dataToFind:", dataToFind)
     try {
         const company = await coreBase.makeSelect(
             'companies',
@@ -60,8 +61,8 @@ const doLoginDashboard = async (dataToFind) => {
                 attributes: ['id'],
             }
         )
-        
-        if (!company || company.length === 0) throw new CustomError(invalidLoginDashboard);
+
+        if (!company || company[0] === undefined) throw new CustomError(invalidLoginDashboard);
         
         const user = await coreBase.makeSelect(
             'dashboard',
