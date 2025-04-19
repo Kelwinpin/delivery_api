@@ -3,9 +3,8 @@
 const tokenService = require('../../../base/auth/token');
 const coreBase = require('../../../base/utils/coreBase');
 const functions = require('../../../base/utils/functions');
-const { CustomError, invalidLogin } = require('../../../base/customErrors');
+const { CustomError, invalidLoginDashboard } = require('../../../base/customErrors');
 const dotenv = require('dotenv');
-const { sendEmail } = require('../../../base/utils/emailSender');
 dotenv.config();
 
 
@@ -61,6 +60,8 @@ const doLoginDashboard = async (dataToFind) => {
                 attributes: ['id'],
             }
         )
+        
+        if (!company || company.length === 0) throw new CustomError(invalidLoginDashboard);
         
         const user = await coreBase.makeSelect(
             'dashboard',

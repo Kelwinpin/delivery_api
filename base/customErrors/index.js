@@ -13,6 +13,12 @@ class CustomError extends Error {
     message: "Confira se os campos de login ou senha estão preenchidos corretamente.",
     title: "Login ou senha invalida.",
   };
+
+  const invalidLoginDashboard = {
+    status: 400,
+    message: "Confira se os campos de login, senha ou cnpj estão preenchidos corretamente.",
+    title: "Login ou senha invalida.",
+  };
   
   const inactiveCompany = {
     status: 400,
@@ -67,4 +73,5 @@ class CustomError extends Error {
     fatherNotFounded,
     fatherHasADependenceFounded,
     MaxDependence,
+    invalidLoginDashboard
   };
