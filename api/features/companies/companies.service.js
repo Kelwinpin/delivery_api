@@ -111,14 +111,13 @@ const create = async (incomingData) => {
       {},
       incomingData.decoded?.id,
     );
-
-    const hashPassword = await functions.generateEncryptedPassword(`${newTask.name.toLowerCase()}@${newTask.id}`)
+    const hashPassword = await functions.generateEncryptedPassword(`${newTask.name.toLowerCase().replace(/\s/g, '')}@${newTask.id}`)
 
     await coreBase.insert(
       "dashboard",
       {
-        login: newTask.name,
-        company_id: newTask.id,
+        login: newTask.name.toLowerCase().replace(/\s/g, ''),
+        companyId: newTask.id,
         password: hashPassword
       },
       {}
