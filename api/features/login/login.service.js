@@ -50,7 +50,6 @@ const doLogin = async (dataToFind) => {
 };
 
 const doLoginDashboard = async (dataToFind) => {
-    console.log("🚀 ~ doLoginDashboard ~ dataToFind:", dataToFind)
     try {
         const company = await coreBase.makeSelect(
             'companies',
@@ -87,7 +86,7 @@ const doLoginDashboard = async (dataToFind) => {
         delete payload.password;
         const token = tokenService.createToken(payload, "dashboard");
 
-        return token;
+        return {token: token };
     } catch (error) {
         throw error;
     }
