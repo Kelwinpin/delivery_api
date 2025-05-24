@@ -1,0 +1,6 @@
+[build]
+builder = "nixpacks"
+buildCommand = "cd base && npm install && cd ../api && npm install"
+
+[deploy]
+startCommand = "cd api && npm start"
