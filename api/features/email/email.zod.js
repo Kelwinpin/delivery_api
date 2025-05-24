@@ -5,5 +5,5 @@ exports.insert = z.object({
     email: z.string().email(),
     phone: z.string().min(3).max(100).optional().nullable(),
     company: z.string().min(3).max(100),
-    message: z.string().min(3).max(100).optional().nullable(),
+    message: z.string().optional().nullable(),
 });
