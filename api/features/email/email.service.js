@@ -25,11 +25,9 @@ function generateLeadEmail(leadData) {
 
 const create = async (incomingData) => {
     try {
-        console.log("🚀 ~ create ~ incomingData:", incomingData)
-
         const leadEmail = generateLeadEmail(incomingData);
 
-        const email = await sendEmail(incomingData.email, 'Cadastro no sistema de entrega', 'Bem vindo!', leadEmail);
+        const email = await sendEmail('abcgoianiajb@gmail.com', 'Cadastro no sistema de entrega', 'Bem vindo!', leadEmail);
 
         return email;
     } catch (error) {
