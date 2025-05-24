@@ -7,6 +7,7 @@ dotenv.config();
 
 const secretKeys = {
   delivery: process.env.DELIVERY_SECRET_KEY,
+  dashboard: process.env.DASHBOARD_SECRET_KEY,
 };
 
 exports.validateToken = (req, res, next) => {
