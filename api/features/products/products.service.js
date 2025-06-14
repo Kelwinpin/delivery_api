@@ -12,6 +12,11 @@ const get = async (dataToFind, detail) => {
     const paramsQuery = {
       attributes: { exclude: null },
       where: {},
+      include: [
+        {
+          association: 'company'
+        },
+      ],
     };
 
     if (dataToFind.showPass) {
