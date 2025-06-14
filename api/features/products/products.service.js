@@ -56,9 +56,9 @@ const get = async (dataToFind, detail) => {
       paramsQuery.where.companyId = dataToFind.companyId;
     }
 
-    if (dataToFind.title) {
-      paramsQuery.where.title = {
-        [Op.like]: '%' + dataToFind.title + '%',
+    if (dataToFind.name) {
+      paramsQuery.where.name = {
+        [Op.like]: '%' + dataToFind.name + '%',
       };
     }
 
