@@ -2,10 +2,12 @@
 
 const express = require('express');
 const authorization = require('../../base/auth/middleware');
+const uploadMiddleware = require('../../api/middleware/uploadMiddleware').uploadMiddleware;
 
 const router = express.Router();
 
 router.use('/g', require('./generalRoutes'));
+router.use('/upload', uploadMiddleware, require('./uploadRoutes'));
 router.use('/login', require('../features/login/login.routes'));
 router.use('/companies', require('../features/companies/companies.routes'));
 router.use('/products', require('../features/products/products.routes'));
