@@ -29,7 +29,8 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "sequelize": "^4.37.6",
-    "sequelize-auto": "^0.8.2"
+    "sequelize-auto": "^0.8.2",
+    "aws-sdk": "^2.462.0"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
