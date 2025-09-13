@@ -104,7 +104,6 @@ const get = async (dataToFind, detail) => {
 
 const create = async (incomingData) => {
   try {
-    // Insere o novo registro
     const newBanner = await coreBase.insert(
       incomingData.entity.model,
       incomingData,
