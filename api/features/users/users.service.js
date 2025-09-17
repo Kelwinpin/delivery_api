@@ -7,6 +7,7 @@ const functions = require('../../../base/utils/functions');
 const { welcome } = require('../../../base/constants/hmtl/welcome');
 
 const get = async (dataToFind, detail) => {
+  console.log("🚀 ~ get ~ dataToFind:", dataToFind)
   try {
     const Op = await coreBase.getOperators();
     const atributosFromAssociation = {};
@@ -33,10 +34,6 @@ const get = async (dataToFind, detail) => {
       );
       paramsQuery.include = associations;
     }
-    
-    if (dataToFind.cpf) {
-      paramsQuery.where.cpf = dataToFind.cpf;
-    }
 
     if (dataToFind.idStatus) {
       paramsQuery.where.idStatus = dataToFind.idStatus;
@@ -53,9 +50,9 @@ const get = async (dataToFind, detail) => {
       paramsQuery.where.companyId = dataToFind.companyId;
     }
 
-    if (dataToFind.title) {
-      paramsQuery.where.title = {
-        [Op.like]: '%' + dataToFind.title + '%',
+    if (dataToFind.cpf) {
+      paramsQuery.where.cpf = {
+        [Op.like]: '%' + dataToFind.cpf + '%',
       };
     }
 
@@ -97,32 +94,18 @@ const get = async (dataToFind, detail) => {
 
 const create = async (incomingData) => {
   try {
-    if (incomingData.companyId) {
-      
-      const paramsQueryCompany = {
-        where: { id: incomingData.companyId },
-      };
-
-      const hasCompany = await coreBase.makeSelect(
-        'companies',
-        paramsQueryCompany,
-      );
-      if (!hasCompany || hasCompany.length === 0) {
-        throw new Error('Company não encontrado');
-      }
-    }
     incomingData.password = await functions.generateEncryptedPassword(incomingData.password);
-    sendEmail(incomingData.email, 'Cadastro no sistema de entrega', 'Bem vindo!', welcome);
-
-    // Insere o novo registro
-    const newTask = await coreBase.insert(
+    
+    const newUser = await coreBase.insert(
       incomingData.entity.model,
       incomingData,
       {},
       incomingData.decoded?.id,
     );
 
-    return incomingData;
+    sendEmail(incomingData.email, 'Cadastro no sistema de entrega', 'Bem vindo!', welcome);
+
+    return newUser;
   } catch (error) {
     throw error;
   }
