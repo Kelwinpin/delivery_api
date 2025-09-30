@@ -7,4 +7,5 @@ exports.insert = z.object({
   password: z.string(),
   email: z.string().email(),
   phone: z.string(),
+  companyId: z.number(),
 });

@@ -7,7 +7,6 @@ const functions = require('../../../base/utils/functions');
 const { welcome } = require('../../../base/constants/hmtl/welcome');
 
 const get = async (dataToFind, detail) => {
-  console.log("🚀 ~ get ~ dataToFind:", dataToFind)
   try {
     const Op = await coreBase.getOperators();
     const atributosFromAssociation = {};
@@ -102,6 +101,12 @@ const create = async (incomingData) => {
       {},
       incomingData.decoded?.id,
     );
+
+    await coreBase.insert("emailValidation", {
+      code: Math.floor(100000 + Math.random() * 900000).toString(),
+      user_id: newUser.id,
+      email: incomingData.email,
+    });
 
     sendEmail(incomingData.email, 'Cadastro no sistema de entrega', 'Bem vindo!', welcome);
 
