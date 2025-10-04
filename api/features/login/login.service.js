@@ -34,7 +34,9 @@ const doLogin = async (dataToFind) => {
         delete payload.password;
         const token = tokenService.createToken(payload, "delivery");
 
-        return token;
+        return {
+            token: token,
+        };
     } catch (error) {
         throw error;
     }

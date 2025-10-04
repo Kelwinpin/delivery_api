@@ -12,11 +12,7 @@ const get = async (dataToFind, detail) => {
     const paramsQuery = {
       attributes: { exclude: null },
       where: {},
-      include: [
-        {
-          association: 'company'
-        },
-      ],
+      include: [],
     };
 
     if (dataToFind.showPass) {
@@ -36,13 +32,9 @@ const get = async (dataToFind, detail) => {
       );
       paramsQuery.include = associations;
     }
-    
-    if (dataToFind.cpf) {
-      paramsQuery.where.cpf = dataToFind.cpf;
-    }
 
-    if (dataToFind.idStatus) {
-      paramsQuery.where.idStatus = dataToFind.idStatus;
+    if (dataToFind.id) {
+      paramsQuery.where.id = dataToFind.id;
     }
 
     if (dataToFind.status == 'active') paramsQuery.where.deletedAt = null;
