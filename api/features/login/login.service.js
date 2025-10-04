@@ -10,25 +10,16 @@ dotenv.config();
 
 const doLogin = async (dataToFind) => {
     try {
-        const company = await coreBase.makeSelect(
-            'companies',
-            {
-                where: {
-                    cnpj: dataToFind.cnpj,
-                },
-                attributes: ['id'],
-            }
-        )
-        
         const user = await coreBase.makeSelect(
             'users',
             {
                 where: {
                     cpf: dataToFind.login,
-                    companyId: company[0].dataValues.id,
+                    companyId: dataToFind.companyId,
                 },
                 include: [{
                     association: 'company',
+                    attributes: { exclude: ['company_id'] }
                 }],
             },
         );
